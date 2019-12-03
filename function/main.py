@@ -167,3 +167,109 @@ def add2(x, y):
 print(add2(10,20))
 print(add2.data)
 
+# Decorator behavior
+
+def hello_decorator(func):
+  def inner1():
+    print("Hello, this is before function execution")
+
+    func()
+    print("this is after func")
+
+  return inner1
+
+def function_to_be_used():
+  print("this is inside the function")
+
+function_to_be_used = hello_decorator(function_to_be_used)
+
+function_to_be_used()
+
+# exercise decorator
+
+import time
+import math
+
+def calculate_time(func):
+  def inner1(*args, **kwargs):
+    begin = time.time()
+
+    func(*args, **kwargs)
+
+    end = time.time()
+    print("Total time : ", func.__name__,end - begin)
+  return inner1
+
+@calculate_time
+def factorial(num):
+  time.sleep(2)
+  print(math.factorial(num))
+
+factorial(10)
+
+# decorator with param
+
+def decorator(*args, **kwargs):
+  print("inside decorator")
+  def inner(func):
+    print("inside inner function")
+    print("I like", kwargs['like'])
+    return func
+  return inner
+@decorator(like = " coffe")
+def func():
+  print("inside actual function")
+
+func()
+
+# exercise decorator with param
+
+def course(*args, **kwargs):
+  print("welcome inside this course ")
+  def person(func):
+    print("Hello what is your name ?")
+    print("my name :", kwargs['name'])
+    return func
+  return person
+@course(name = " Hendy")
+def func2():
+  print("welcome inside in this course ")
+
+func2()
+
+# # iterator
+class reverse:
+  def __init__(self, data):
+    self.data = data
+    self.index = len(data)
+
+  def __iter__(self):
+    return self
+
+  def __next__(self):
+    if self.index == 0:
+        raise StopIteration
+    self.index -= 1
+    return self.data[self.index]
+
+def Main():
+  rev = reverse('Hendy')
+  for char in rev:
+    print(char)
+
+if __name__ == '__main__':
+  Main()
+
+# # generator 
+
+# def reverse2(data):
+#   for index in range(len(data)-1, -1, -1):
+#     yield data[index]
+
+# def Main2():
+#   data = 'Hendy'
+#   print(list(data[i] for i in range(len(data)-1,-1,-1)))
+
+# if __name__=="__main__":
+#   Main2()
+

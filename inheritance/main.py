@@ -342,3 +342,63 @@ class Resident(Person2, Student2): # extends both Person and Student class
 resident1 = Resident('John', 30, '102')  
 resident1.showName()  
 print(resident1.getId())  
+
+# exercise 2
+
+class coffe(object):
+  def __init__(self, name):
+    self.name = name
+
+  def getname(self):
+    return self.name
+  
+  def isgood(self):
+    return False
+
+class Latte(coffe):
+  def __init__(self, name, pid):
+    super(Latte, self).__init__(name)
+    # or in python 3 can use this super 
+    # super().__init__(name)
+    self.prodID = pid
+
+  def isgood(self):
+    return True
+
+  def getID(self):
+    return self.prodID
+
+prod = Latte("Latte Flower", "L01")
+print(" name productnya : ",prod.getname()," ,product idnya : " ,prod.getID())
+
+# exercise multiple inheritance
+class html:
+  def __init__(self):
+    print("I'm in class Html yesterday")
+
+  def person_html(self, a):
+    print("person in class html: ", a)
+
+class css(html):
+  def __init__(self):
+    print("I'm in class css now ")
+    super().__init__()
+
+  def person_css(self, a):
+    print("person in class css :", a)
+    super().person_html(a+1)
+
+class javascript(css):
+  def __init__(self):
+    print("I'm in class javascript sesok")
+    super().__init__()
+
+  def person_js(self, a):
+    print("person in javascript class :", a)
+    super().person_css(a+1)
+
+if __name__ == '__main__':
+
+  course = javascript()
+  course.person_js(20)
+
