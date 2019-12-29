@@ -1,0 +1,93 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="partner_npwp_view">
+                <field name="name">partner_npwp_view</field>
+                <field name="model">res.partner</field>
+                <field name="inherit_id" ref="account.view_partner_property_form" />
+
+                <field name="arch" type="xml"> 
+<!-- 
+                        <div name="button_box" position="inside" >
+                            <button 
+                                name="create_invoice" 
+                                type="object" 
+                                class="oe_stat_button" 
+                                icon="fa-archive" 
+                                string="Create Invoice">
+                            </button>
+                        </div> -->
+
+                        <field name="property_account_position_id" position="after">
+                            <field name="npwp" />
+                        </field>
+
+                        <page name="sales_purchases" position="after">
+                            <page string="Sale Orders">
+                                <field name="sale_order_ids">
+                                    <tree>
+                                        <field name="name" />
+                                        <field name="date_order"/>
+                                        <field name="amount_total"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </page>
+                </field>
+        </record>
+
+        <record model="ir.ui.view" id="partner_npwp_tree">
+                <field name="name">partner_npwp_tree</field>
+                <field name="model">res.partner</field>
+                <field name="inherit_id" ref="base.view_partner_tree"/>
+
+                <field name="arch" type="xml">
+                        <field name="display_name" position="after">
+                            <field name="npwp"/>
+                        </field>
+                </field>
+
+        </record>
+
+        <record model="ir.ui.view" id="partner_npwp_kanban">
+                <field name="name">partner_npwp_kanban</field>
+                <field name="model">res.partner</field>
+                <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+
+                <field name="arch" type="xml">
+                        <field name="email" position="after">
+                                <field name="npwp"/>
+                        </field>
+                        <xpath expr="//div[@class='oe_kanban_partner_links']" position="inside">
+
+                            <span t-if="record.npwp">
+                                <t t-esc="record.npwp.value" />
+                            </span>
+                        </xpath>  
+
+                </field>
+
+        </record>
+
+        <record model="ir.ui.view" id="partner_npwp_search">
+                <field name="name">partner_npwp_search</field>
+                <field name="model">res.partner</field>
+                <field name="inherit_id" ref="base.view_res_partner_filter"/>
+
+                <field name="arch" type="xml">
+                    <search position="inside">
+                        <field name="npwp" />
+
+                        <separator />
+
+                        <filter name="punya_npwp" string="Have NPWP" domain="[('npwp','!=',False)]" />
+
+                        <filter name="non_npwp" string="Don't Have NPWP" domain="[('npwp','=',False)]" />
+
+                    </search>
+                </field>
+
+        </record>
+
+    </data>
+</odoo>
